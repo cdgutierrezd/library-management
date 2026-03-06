@@ -64,7 +64,8 @@ public class BookServiceImpl implements BookServiceInterface {
     @Override
     public BookResponseDTO update(Long id, BookRequestDTO dto) {
         Book existingBook = bookRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(ErrorCode.BOOK_NOT_FOUND, "Book not found with id: " + id));
+                .orElseThrow(()
+                        -> new ResourceNotFoundException(ErrorCode.BOOK_NOT_FOUND, "Book not found with id: " + id));
 
         existingBook.setTitle(dto.getTitle());
         existingBook.setAuthor(dto.getAuthor());
@@ -77,7 +78,7 @@ public class BookServiceImpl implements BookServiceInterface {
 
     @Override
     public void deleteById(Long id) {
-        List<LoanResponseDTO>  loans= loanService.findByBookId(id);
+        List<LoanResponseDTO> loans = loanService.findByBookId(id);
         if (!loans.isEmpty()) {
             throw new BusinessException(ErrorCode.BOOK_HAS_ACTIVE_LOANS);
         }
