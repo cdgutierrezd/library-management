@@ -339,7 +339,7 @@ public class BookServiceImplTest {
         String title = "NonExisting";
         Pageable pageable = PageRequest.of(0, 10);
 
-        Page<Book> emptyPage = Page.empty();
+        Page<Book> emptyPage = Page.empty(pageable);
 
         when(bookRepository.findByTitleContainingIgnoreCase(title, pageable)).thenReturn(emptyPage);
 
